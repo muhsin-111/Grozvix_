@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Grozvix</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Orbitron:wght@700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Override global dark theme for the About Page */
+        body {
+            background-color: #ffffff; /* White background */
+            color: #000000; /* Black text for paragraphs */
+        }
+
+        /* Adjust the header so it stays dark and readable */
+        header {
+            background-color: #000000;
+        }
+
+        /* About Section Container */
+        .about-section {
+            padding: 160px 20px 80px; /* Extra top padding to clear the fixed header */
+            max-width: 900px;
+            margin: 0 auto;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        /* Headings Styling */
+        .about-heading-1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 3.5rem; /* Same size */
+            color: #001f5b; /* Premium Dark Blue */
+            margin: 0; /* Zero distance */
+            line-height: 1.1;
+        }
+
+        .about-heading-2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 3.5rem; /* Same size */
+            color: #000000; /* Black */
+            margin: 0; /* Zero distance */
+            line-height: 1.1;
+            margin-bottom: 40px; /* Space before paragraph */
+        }
+
+        /* Typewriter cursor */
+        .cursor {
+            display: inline-block;
+            width: 4px;
+            height: 3rem;
+            background-color: #ffea00; /* Yellow cursor to keep brand identity */
+            vertical-align: middle;
+            margin-left: 5px;
+            animation: blink 0.75s step-end infinite;
+        }
+
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Paragraph Content Styling */
+        .about-content {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #333333;
+            text-align: justify;
+            text-align-last: center; /* Centers the last line of justified text */
+            padding: 0 20px;
+        }
+
+        .about-content p {
+            margin-bottom: 20px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .about-heading-1, .about-heading-2 {
+                font-size: 2rem;
+            }
+            .cursor {
+                height: 2rem;
+            }
+            .about-content {
+                font-size: 1rem;
+                text-align: left;
+                text-align-last: left;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <div class="logo" style="font-family: 'Montserrat', sans-serif; font-weight: 800; color: #ffffff;">GROZ<span class="text-primary">VIX</span></div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html" class="text-primary">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="portfolio.html">Portfolio</a></li>
+                    <li><a href="pricing.html">Pricing</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="about-section">
+        
+        <h1 class="about-heading-1">About Grozvix</h1>
+        
+        <h2 class="about-heading-2">
+            <span id="typewriter-text"></span><span class="cursor"></span>
+        </h2>
+
+        <div class="about-content">
+            <p>
+                Grozvix is a full-service A to Z marketing agency built for modern brands. We combine creativity, strategy, and technology to deliver real business growth. From video production to high-converting ad campaigns, we handle everything. 
+            </p>
+            <p>
+                Our team manages social media, branding, content, and digital presence seamlessly. We create powerful visuals, engaging content, and performance-driven marketing. Web development and app solutions are crafted for impact and scalability. Every campaign is backed by research, precision, and innovation.
+            </p>
+            <p>
+                We focus not just on reach — but on results and revenue. With Grozvix, brands gain a dedicated growth partner. <strong>One agency. Complete marketing. Limitless possibilities.</strong>
+            </p>
+        </div>
+
+    </section>
+
+    <a href="https://wa.me/YOURNUMBERHERE" target="_blank" class="whatsapp-float">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        const words = [
+            "Who you are",
+            "What you do",
+            "Why choose Grozvix"
+        ];
+        
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typeElement = document.getElementById("typewriter-text");
+
+        function typeEffect() {
+            const currentWord = words[wordIndex];
+
+            if (isDeleting) {
+                // Remove a character
+                typeElement.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                // Add a character
+                typeElement.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            // Typing speeds
+            let typeSpeed = isDeleting ? 40 : 100;
+
+            // If word is completely typed out
+            if (!isDeleting && charIndex === currentWord.length) {
+                typeSpeed = 2000; // Pause at the end of the word to let user read it
+                isDeleting = true;
+            } 
+            // If word is completely deleted
+            else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length; // Move to next word
+                typeSpeed = 500; // Pause before typing next word
+            }
+
+            setTimeout(typeEffect, typeSpeed);
+        }
+
+        // Start the effect when page loads
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(typeEffect, 1000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grozvix | Complete A to Z Marketing</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Orbitron:wght@700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================
+           GLOBAL SETTINGS & UTILITIES
+           ========================================================== */
+        html { scroll-behavior: smooth; }
+        body { margin: 0; padding: 0; background-color: #000000; font-family: 'Poppins', sans-serif; overflow-x: hidden; }
+        * { box-sizing: border-box; }
+
+        .highlight { color: #ffea00; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+
+        /* Shared Dark Gradient Background */
+        .dark-gradient-bg {
+            background: linear-gradient(135deg, #000000 30%, rgba(255, 234, 0, 0.15) 100%);
+            background-color: #000000; 
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block; padding: 12px 30px; border-radius: 8px; font-weight: 600; 
+            cursor: pointer; transition: all 0.3s ease; text-align: center; border: 2px solid transparent;
+            font-family: 'Poppins', sans-serif; font-size: 1rem; text-decoration: none;
+        }
+        .btn-primary { background-color: #ffea00; color: #000000; border-color: #ffea00; }
+        .btn-primary:hover { background-color: transparent; color: #ffea00; box-shadow: 0 0 15px rgba(255, 234, 0, 0.4); }
+        .btn-outline { background-color: transparent; border-color: #ffea00; color: #ffea00; }
+        .btn-outline:hover { background-color: #ffea00; color: #000000; }
+
+        /* ==========================================================
+           HEADER & NAVIGATION (Mobile Responsive)
+           ========================================================== */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.95); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 234, 0, 0.2);
+        }
+        .nav-container {
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 15px 20px; max-width: 1200px; margin: 0 auto;
+        }
+        .header-logo { max-height: 45px; width: auto; display: block; transition: transform 0.3s; }
+        .header-logo:hover { transform: scale(1.05); }
+
+        .nav-links { display: flex; gap: 25px; list-style: none; margin: 0; padding: 0; }
+        .nav-links a { color: #ffffff; font-weight: 600; text-decoration: none; transition: color 0.3s; }
+        .nav-links a:hover, .nav-links a.active-link { color: #ffea00; }
+        
+        .menu-toggle { display: none; color: #ffea00; font-size: 1.8rem; cursor: pointer; }
+
+        /* Mobile Nav Styles */
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .nav-links {
+                display: none; flex-direction: column; position: absolute;
+                top: 76px; left: 0; width: 100%; background-color: rgba(0, 0, 0, 0.98);
+                padding: 20px 0; text-align: center; gap: 20px;
+                border-bottom: 1px solid #ffea00;
+            }
+            .nav-links.active { display: flex; animation: slideDown 0.3s ease; }
+            @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        }
+
+        /* ==========================================================
+           1. HERO SECTION
+           ========================================================== */
+        .hero-section {
+            position: relative; padding: 120px 20px 60px; min-height: 100vh; 
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+            background: url('cover.png') center/cover no-repeat;
+        }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.75); z-index: 1; }
+        .hero-content { position: relative; z-index: 10; text-align: center; display: flex; flex-direction: column; align-items: center; }
+        .main-heading { font-family: 'Orbitron', sans-serif; font-size: 5rem; font-weight: 700; margin-bottom: 5px; line-height: 1.2; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .yellow-text { color: #ffea00; } .white-text { color: #ffffff; }
+        .sub-heading { font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 400; color: #e0e0e0; margin-bottom: 40px; }
+        .hero-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+
+        /* CAPSULES */
+        .capsules-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; pointer-events: none; }
+        .capsule {
+            position: absolute; padding: 8px 20px; border-radius: 50px; font-weight: 700; color: #fff; font-size: 0.9rem;
+            bottom: 100%; left: var(--left); opacity: 0; transform: rotate(var(--rot));
+            animation: dropDown 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards, floatCapsule 2.5s infinite alternate ease-in-out;
+            animation-delay: var(--delay), calc(var(--delay) + 1s);
+        }
+        @keyframes dropDown { 0% { bottom: 100%; opacity: 0; } 50% { opacity: 1; } 100% { bottom: var(--bottom); opacity: 1; } }
+        @keyframes floatCapsule { 0% { transform: translateY(0px) rotate(var(--rot)); } 100% { transform: translateY(-4px) rotate(calc(var(--rot) + 3deg)); } }
+
+        /* ==========================================================
+           2. ABOUT SECTION 
+           ========================================================== */
+        .about-section { display: flex; align-items: center; justify-content: center; padding: 100px 20px; min-height: 100vh; }
+        .about-container { max-width: 900px; text-align: center; }
+        .about-heading-1, .about-heading-2 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 3.5rem; color: #ffffff; margin: 0; line-height: 1.2; }
+        .about-heading-2 { margin-bottom: 30px; }
+        .cursor { display: inline-block; width: 4px; height: 3rem; background-color: #ffea00; vertical-align: middle; margin-left: 5px; animation: blink 0.75s step-end infinite; }
+        @keyframes blink { from, to { opacity: 1; } 50% { opacity: 0; } }
+        .about-content { font-family: 'Poppins', sans-serif; font-size: 1.1rem; line-height: 1.8; color: #d0d0d0; text-align: center; }
+
+        /* ==========================================================
+           3. OFFICE TOUR SECTION
+           ========================================================== */
+        .office-section { padding: 100px 20px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .office-container { max-width: 1200px; width: 100%; }
+        .section-heading { color: #ffffff; font-family: 'Orbitron', sans-serif; font-size: 3.2rem; text-align: center; margin-bottom: 50px; font-weight: 700; }
+        .office-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+        .office-video { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border: 3px solid #ffea00; border-radius: 12px; box-shadow: 0 10px 30px rgba(255, 234, 0, 0.15); }
+        .office-content p { color: #d0d0d0; font-size: 1rem; line-height: 1.8; margin-bottom: 15px; }
+
+        /* ==========================================================
+           4. SERVICES SECTION 
+           ========================================================== */
+        .services-section { padding: 100px 20px; min-height: 100vh; }
+        .flip-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        
+        .flip-card { background-color: transparent; width: 100%; height: 400px; perspective: 1000px; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-style: preserve-3d; }
+        .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+        
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; display: flex; flex-direction: column; transition: box-shadow 0.3s; }
+        
+        /* ---------------------------------------------------
+           INDIVIDUAL PLANE COLORS & DYNAMIC GLOW (HOVER)
+           --------------------------------------------------- */
+        
+        /* Box 1: Red (#ff4757) */
+        .card-1 .flip-card-front, .card-1 .flip-card-back { background-color: #ff4757; color: #ffffff; border: 4px solid #ffffff; }
+        .card-1 .flip-card-back h3 { border-bottom: 2px solid #ffffff; }
+        .card-1 .flip-card-back ul li::before { color: #ffffff; }
+        .card-1:hover .flip-card-front, .card-1:hover .flip-card-back { box-shadow: 0 0 25px rgba(255, 71, 87, 0.8), 0 0 45px rgba(255, 71, 87, 0.4); }
+
+        /* Box 2: Coral (#ff7f50) */
+        .card-2 .flip-card-front, .card-2 .flip-card-back { background-color: #ff7f50; color: #ffffff; border: 4px solid #ffffff; }
+        .card-2 .flip-card-back h3 { border-bottom: 2px solid #ffffff; }
+        .card-2 .flip-card-back ul li::before { color: #ffffff; }
+        .card-2:hover .flip-card-front, .card-2:hover .flip-card-back { box-shadow: 0 0 25px rgba(255, 127, 80, 0.8), 0 0 45px rgba(255, 127, 80, 0.4); }
+
+        /* Box 3: Mint Green (#2ed573) */
+        .card-3 .flip-card-front, .card-3 .flip-card-back { background-color: #2ed573; color: #000000; border: 4px solid #000000; }
+        .card-3 .flip-card-back h3 { border-bottom: 2px solid #000000; }
+        .card-3 .flip-card-back ul li::before { color: #000000; }
+        .card-3:hover .flip-card-front, .card-3:hover .flip-card-back { box-shadow: 0 0 25px rgba(46, 213, 115, 0.8), 0 0 45px rgba(46, 213, 115, 0.4); }
+
+        /* Box 4: Blue (#1e90ff) */
+        .card-4 .flip-card-front, .card-4 .flip-card-back { background-color: #1e90ff; color: #ffffff; border: 4px solid #ffffff; }
+        .card-4 .flip-card-back h3 { border-bottom: 2px solid #ffffff; }
+        .card-4 .flip-card-back ul li::before { color: #ffffff; }
+        .card-4:hover .flip-card-front, .card-4:hover .flip-card-back { box-shadow: 0 0 25px rgba(30, 144, 255, 0.8), 0 0 45px rgba(30, 144, 255, 0.4); }
+
+        /* Box 5: Purple (#9b59b6) */
+        .card-5 .flip-card-front, .card-5 .flip-card-back { background-color: #9b59b6; color: #ffffff; border: 4px solid #ffffff; }
+        .card-5 .flip-card-back h3 { border-bottom: 2px solid #ffffff; }
+        .card-5 .flip-card-back ul li::before { color: #ffffff; }
+        .card-5:hover .flip-card-front, .card-5:hover .flip-card-back { box-shadow: 0 0 25px rgba(155, 89, 182, 0.8), 0 0 45px rgba(155, 89, 182, 0.4); }
+
+        /* Box 6: Yellow (#ffea00) */
+        .card-6 .flip-card-front, .card-6 .flip-card-back { background-color: #ffea00; color: #000000; border: 4px solid #000000; }
+        .card-6 .flip-card-back h3 { border-bottom: 2px solid #000000; }
+        .card-6 .flip-card-back ul li::before { color: #000000; }
+        .card-6:hover .flip-card-front, .card-6:hover .flip-card-back { box-shadow: 0 0 25px rgba(255, 234, 0, 0.8), 0 0 45px rgba(255, 234, 0, 0.4); }
+
+        .flip-card-front { justify-content: center; align-items: center; padding: 20px; }
+        .flip-card-front i { font-size: 3rem; margin-bottom: 15px; }
+        .flip-card-front h3 { font-family: 'Orbitron', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; line-height: 1.2; text-align: center; }
+        .flip-card-front p { font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 600; text-align: center; }
+        
+        .flip-card-back { transform: rotateY(180deg); justify-content: flex-start; text-align: left; padding: 20px 15px; overflow-y: auto; }
+        .flip-card-back h3 { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; text-align: center; padding-bottom: 5px; }
+        .flip-card-back ul { list-style: none; padding: 0; margin: 0; }
+        .flip-card-back ul li { font-family: 'Poppins', sans-serif; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; position: relative; padding-left: 20px; line-height: 1.4; }
+        .flip-card-back ul li::before { content: '\f00c'; font-family: 'Font Awesome 5 Free'; font-weight: 900; position: absolute; left: 0; }
+
+        /* ==========================================================
+           5. PROCESS SECTION 
+           ========================================================== */
+        .process-section { padding: 100px 20px; display: flex; flex-direction: column; align-items: center; overflow: hidden; }
+        .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 80px 30px; max-width: 1000px; width: 100%; position: relative; }
+        .process-step { display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; }
+        .process-step.step-4 { grid-column: 3; grid-row: 2; }
+        .process-step.step-5 { grid-column: 2; grid-row: 2; }
+        .process-step.step-6 { grid-column: 1; grid-row: 2; }
+
+        .step-circle { width: 70px; height: 70px; border-radius: 50%; color: #ffffff; display: flex; justify-content: center; align-items: center; font-family: 'Montserrat', sans-serif; font-size: 1.8rem; font-weight: 800; margin-bottom: 20px; z-index: 2; border: 3px solid #ffea00; background-color: #121212; }
+        .step-title { color: #ffffff; font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 800; margin-bottom: 10px; }
+        .step-desc { color: #b0b0b0; font-family: 'Poppins', sans-serif; font-size: 0.9rem; line-height: 1.6; }
+
+        .dashed-connector { position: absolute; z-index: 1; border: 2px dashed #ffea00; }
+        .line-right { top: 35px; left: 50%; width: 100%; border-bottom: none; border-left: none; border-right: none; }
+        .line-right::after { content: '\f0da'; font-family: 'Font Awesome 5 Free'; font-weight: 900; color: #ffea00; position: absolute; right: -5px; top: -11px; font-size: 20px; }
+        .line-u-turn { top: 35px; left: 50%; width: 80%; height: calc(100% + 80px); border-left: none; border-radius: 0 50px 50px 0; }
+        .line-left { top: 35px; right: 50%; width: 100%; border-bottom: none; border-left: none; border-right: none; }
+        .line-left::after { content: '\f0d9'; font-family: 'Font Awesome 5 Free'; font-weight: 900; color: #ffea00; position: absolute; left: -5px; top: -11px; font-size: 20px; }
+
+        /* ==========================================================
+           6. BLOG SECTION
+           ========================================================== */
+        .blog-section { padding: 100px 20px; display: flex; flex-direction: column; align-items: center; }
+        .blog-subheading { color: #b0b0b0; font-size: 1rem; line-height: 1.6; text-align: center; max-width: 700px; margin-bottom: 50px; }
+        .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; width: 100%; margin-bottom: 50px; }
+        .blog-card { background-color: #111; border: 1px solid rgba(255, 234, 0, 0.2); border-radius: 12px; overflow: hidden; transition: transform 0.3s; }
+        .blog-card:hover { border-color: #ffea00; transform: translateY(-5px); box-shadow: 0 10px 30px rgba(255, 234, 0, 0.1); }
+        .blog-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-bottom: 2px solid #ffea00; }
+        .blog-body { padding: 20px; }
+        .blog-title { color: #ffffff; font-family: 'Montserrat', sans-serif; font-size: 1.1rem; font-weight: 800; margin-bottom: 15px; }
+        .blog-text, .blog-more-content { color: #a0a0a0; font-size: 0.9rem; line-height: 1.6; margin-bottom: 15px; }
+        .blog-more-content { display: none; }
+        .read-more-btn { background: none; border: none; color: #ffea00; font-weight: 700; font-size: 0.9rem; cursor: pointer; padding: 0; }
+
+        /* ==========================================================
+           7. FOOTER SECTION
+           ========================================================== */
+        .footer-section { background-color: #050505; color: #ffffff; padding: 60px 20px 20px; border-top: 2px solid #ffea00; }
+        .footer-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto 40px; }
+        .footer-logo { max-width: 180px; margin-bottom: 15px; }
+        .footer-heading { color: #ffea00; font-family: 'Orbitron', sans-serif; font-size: 1.2rem; margin-bottom: 20px; }
+        .footer-text { color: #a0a0a0; font-size: 0.95rem; line-height: 1.6; margin-bottom: 10px; }
+        .social-links { display: flex; gap: 15px; }
+        .social-link { width: 40px; height: 40px; border-radius: 50%; background-color: #111; color: #fff; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; text-decoration: none; border: 1px solid #333; transition: all 0.3s; }
+        .social-link:hover { background-color: #ffea00; color: #000; border-color: #ffea00; transform: translateY(-3px); }
+        .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid #222; color: #666; font-size: 0.85rem; }
+
+        /* ==========================================================
+           8. MODAL FORM STYLES
+           ========================================================== */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); backdrop-filter: blur(5px); justify-content: center; align-items: center; padding: 20px; }
+        .modal-content { background-color: #121212; border: 2px solid #ffea00; border-radius: 12px; padding: 30px; width: 100%; max-width: 450px; position: relative; max-height: 90vh; overflow-y: auto; }
+        .close-btn { position: absolute; top: 10px; right: 20px; color: #ffffff; font-size: 28px; cursor: pointer; }
+        .modal-title { color: #ffffff; font-family: 'Orbitron', sans-serif; font-size: 1.6rem; margin-bottom: 20px; text-align: center; }
+        .form-input { width: 100%; padding: 12px; background-color: #000; border: 1px solid #333; color: #fff; border-radius: 6px; font-family: 'Poppins', sans-serif; font-size: 0.95rem; margin-bottom: 15px; }
+        .form-input:focus { outline: none; border-color: #ffea00; }
+
+        /* Floating WhatsApp */
+        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background-color: #25d366; color: white; width: 55px; height: 55px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 28px; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); z-index: 999; text-decoration: none; transition: transform 0.3s; }
+        .whatsapp-float:hover { transform: scale(1.1); }
+
+        /* ==========================================================
+           100% MOBILE RESPONSIVE OVERRIDES
+           ========================================================== */
+        @media (max-width: 992px) {
+            .main-heading { font-size: 3.5rem; }
+            .section-heading { font-size: 2.5rem; }
+            .office-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            section { padding: 70px 15px; } /* Less padding on mobile */
+            .main-heading { font-size: 2.8rem; }
+            .sub-heading { font-size: 1.1rem; margin-bottom: 30px; }
+            .about-heading-1, .about-heading-2, .section-heading { font-size: 2rem; }
+            .cursor { height: 2rem; }
+            
+            /* Process Grid stacked into vertical column */
+            .process-grid { grid-template-columns: 1fr; gap: 40px; }
+            .process-step.step-4 { grid-column: 1; grid-row: 4; }
+            .process-step.step-5 { grid-column: 1; grid-row: 5; }
+            .process-step.step-6 { grid-column: 1; grid-row: 6; }
+            
+            /* All dashed arrows point strictly downwards on mobile */
+            .dashed-connector {
+                position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+                width: 0; height: 30px; border-top: none; border-right: none; border-bottom: none;
+                border-left: 2px dashed #ffea00; border-radius: 0;
+            }
+            .line-right::after, .line-left::after, .line-u-turn::after {
+                content: '\f0d7'; left: -9px; bottom: -12px; top: auto; right: auto;
+            }
+            .step-6 .dashed-connector { display: none; }
+
+            .hero-buttons { flex-direction: column; width: 100%; }
+            .hero-buttons .btn { width: 100%; }
+
+            .footer-col { align-items: center; text-align: center; }
+            .footer-text { text-align: center; padding-left: 0 !important; }
+            
+            .flip-card { height: 420px; } 
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <a href="#home"><img src="logo.png" alt="Grozvix Logo" class="header-logo"></a>
+            </div>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home" style="color: #ffea00;">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#process">Process</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#footer">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="main-heading">
+                <span class="white-text">COMPLETE</span><br>
+                <span class="yellow-text">A TO Z MARKETING</span>
+            </h1>
+            <h2 class="sub-heading">One Team. One Vision. Total Growth.</h2>
+            <div class="hero-buttons">
+                <a href="#services" class="btn btn-primary">Get Started</a>
+                <a href="https://wa.me/917907287563" target="_blank" class="btn btn-outline">Consult Now</a>
+            </div>
+        </div>
+
+        <div class="capsules-container">
+            <div class="capsule" style="background: linear-gradient(45deg, #ff4757, #ff6b81); --left: 5%; --bottom: 10px; --rot: -8deg; --delay: 0.1s;">#Leads</div>
+            <div class="capsule" style="background: linear-gradient(45deg, #1e90ff, #70a1ff); --left: 24%; --bottom: 10px; --rot: 5deg; --delay: 0.3s;">#Seo</div>
+            <div class="capsule" style="background: linear-gradient(45deg, #9b59b6, #8e44ad); --left: 46%; --bottom: 10px; --rot: -3deg; --delay: 0.2s;">#Strategy</div>
+            <div class="capsule" style="background: linear-gradient(45deg, #ff7f50, #ff6348); --left: 68%; --bottom: 10px; --rot: 7deg; --delay: 0.4s;">#Marketing</div>
+            <div class="capsule" style="background: linear-gradient(45deg, #ff1493, #ff69b4); --left: 88%; --bottom: 10px; --rot: -6deg; --delay: 0.2s;">#Conversion</div>
+            <div class="capsule" style="background: linear-gradient(45deg, #2ed573, #7bed9f); --left: 14%; --bottom: 50px; --rot: 15deg; --delay: 0.6s;">#Searching</div>
+            <div class="capsule" style="background: linear-gradient(45deg, #ffa502, #eccc68); --left: 34%; --bottom: 53px; --rot: -12deg; --delay: 0.8s;">#Develop</div>
+            <div class="capsule" style="background: linear-gradient(45deg, #ffea00, #f1c40f); color: black; --left: 55%; --bottom: 57px; --rot: 18deg; --delay: 0.7s;">#Awesome!</div>
+            <div class="capsule" style="background: linear-gradient(45deg, #3742fa, #5352ed); --left: 77%; --bottom: 51px; --rot: -15deg; --delay: 0.9s;">#Creatives</div>
+            <div class="capsule" style="background: linear-gradient(45deg, #00ced1, #48dbfb); --left: 80%; --bottom: 80px; --rot: 10deg; --delay: 1.1s;">#Designing</div>
+        </div>
+    </section>
+
+    <section id="about" class="about-section dark-gradient-bg">
+        <div class="about-container">
+            <h1 class="about-heading-1">About <span class="highlight">Grozvix</span></h1>
+            <h2 class="about-heading-2"><span id="typewriter-text"></span><span class="cursor"></span></h2>
+            <div class="about-content">
+                <p>Grozvix is a full-service A to Z marketing agency built for modern brands. We combine creativity, strategy, and technology to deliver real business growth. From video production to high-converting ad campaigns, we handle everything.</p>
+                <p>Our team manages social media, branding, content, and digital presence seamlessly. We create powerful visuals, engaging content, and performance-driven marketing. Web development and app solutions are crafted for impact and scalability. Every campaign is backed by research, precision, and innovation.</p>
+                <p>We focus not just on reach — but on results and revenue. With Grozvix, brands gain a dedicated growth partner. <strong>One agency. Complete marketing. Limitless possibilities.</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="office-tour" class="office-section dark-gradient-bg">
+        <h2 class="section-heading">Inside Our <span class="highlight">Creative Hub</span></h2>
+        <div class="office-container">
+            <div class="office-grid">
+                <div class="office-video-container">
+                    <video src="office.mp4" autoplay loop muted playsinline class="office-video"></video>
+                </div>
+                <div class="office-content">
+                    <p>At Grozvix, every project begins with powerful ideas and ends with measurable results. Our workspace is designed to inspire creativity, collaboration, and innovation.</p>
+                    <p>From content creation and video production to performance marketing and development, this is where brands are transformed into market leaders.</p>
+                    <p>We combine technology, talent, and strategy under one roof — ensuring every campaign delivers impact, growth, and success.</p>
+                    <p>This is not just an office.<br>This is where brands are built.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services-section dark-gradient-bg">
+        <h2 class="section-heading">What We Do</h2>
+        <div class="flip-grid">
+            
+            <div class="flip-card card-1">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <i class="fas fa-video"></i>
+                        <h3>Creative Production</h3>
+                        <p>We create powerful visual content that captures attention and builds brand identity.</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <h3>Creative Production</h3>
+                        <ul>
+                            <li>Professional Video Shooting</li>
+                            <li>High-Quality Video Editing</li>
+                            <li>Product & Corporate Photo Shoots</li>
+                            <li>Photo Editing & Retouching</li>
+                            <li>Reels & Promotional Videos</li>
+                            <li>Video Anchoring & Presentation</li>
+                            <li>Ad Film Production</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card card-2">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <i class="fas fa-share-alt"></i>
+                        <h3>Social Media</h3>
+                        <p>We manage and grow your social presence with engaging content and smart strategies.</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <h3>Social Media</h3>
+                        <ul>
+                            <li>Instagram Page Handling</li>
+                            <li>Facebook Page Management</li>
+                            <li>YouTube Channel Management</li>
+                            <li>Content Calendar Planning</li>
+                            <li>Reels & Shorts Creation</li>
+                            <li>Audience Growth Strategy</li>
+                            <li>Community Engagement</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card card-3">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Performance Ads</h3>
+                        <p>We run result-driven ad campaigns that generate leads, traffic, and sales.</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <h3>Performance Ads</h3>
+                        <ul>
+                            <li>Meta Ads (Facebook & Instagram)</li>
+                            <li>Google Ads Campaigns</li>
+                            <li>Lead Generation Ads</li>
+                            <li>Conversion Campaigns</li>
+                            <li>Retargeting Ads</li>
+                            <li>Funnel Strategy & Optimization</li>
+                            <li>Analytics & Performance Tracking</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card card-4">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <i class="fas fa-search"></i>
+                        <h3>SEO</h3>
+                        <p>We improve your online visibility and help your website rank higher on search engines.</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <h3>SEO Optimization</h3>
+                        <ul>
+                            <li>Keyword Research & Strategy</li>
+                            <li>On-Page SEO Optimization</li>
+                            <li>Technical SEO Improvements</li>
+                            <li>Local SEO Optimization</li>
+                            <li>Content SEO Strategy</li>
+                            <li>Website Speed Optimization</li>
+                            <li>Google Search Console Setup</li>
+                            <li>Competitor Analysis</li>
+                            <li>Monthly SEO Reporting</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card card-5">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <i class="fas fa-paint-brush"></i>
+                        <h3>Branding & Design</h3>
+                        <p>We build strong and memorable brand identities.</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <h3>Branding & Design</h3>
+                        <ul>
+                            <li>Logo Design</li>
+                            <li>Brand Identity Development</li>
+                            <li>Poster & Creative Design</li>
+                            <li>Social Media Creatives</li>
+                            <li>Corporate Branding Materials</li>
+                            <li>Marketing Collateral Design</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card card-6">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>Development</h3>
+                        <p>We build high-performance digital platforms for your business.</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <h3>Development Solutions</h3>
+                        <ul>
+                            <li>Professional Website Development</li>
+                            <li>E-commerce Website Development</li>
+                            <li>Landing Page Design</li>
+                            <li>Business Website Redesign</li>
+                            <li>Mobile App Development</li>
+                            <li>UI/UX Design</li>
+                            <li>Website Maintenance & Support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="process" class="process-section dark-gradient-bg">
+        <h2 class="section-heading">We Always Follow The <span class="highlight">Standard Work Process</span></h2>
+        <div class="process-grid">
+            <div class="process-step step-1"><div class="step-circle">1</div><h3 class="step-title">Planning</h3><p class="step-desc">The first step in any successful digital marketing campaign is planning. This includes research into your target audience, your competitors, and your overall goals.</p><div class="dashed-connector line-right"></div></div>
+            <div class="process-step step-2"><div class="step-circle">2</div><h3 class="step-title">Strategy</h3><p class="step-desc">This is where we'll determine approaches to reach your target audience and accomplish your objectives. It's crucial to choose the right digital marketing channels for your company.</p><div class="dashed-connector line-right"></div></div>
+            <div class="process-step step-3"><div class="step-circle">3</div><h3 class="step-title">Execution</h3><p class="step-desc">This is where the rubber meets the road! We will start implementing your digital marketing plan for running creative campaigns, and many more.</p><div class="dashed-connector line-u-turn"></div></div>
+            <div class="process-step step-4"><div class="step-circle">4</div><h3 class="step-title">Tracking & Analysis</h3><p class="step-desc">Analysing and keeping tabs on outcomes is crucial. We will assess what's working and what's not and make modifications to enhance your performance.</p><div class="dashed-connector line-left"></div></div>
+            <div class="process-step step-5"><div class="step-circle">5</div><h3 class="step-title">Refinement</h3><p class="step-desc">After analysing your outcomes, we adjust your digital marketing plan. This may include updating your website, social media, digital advertising, or other strategies.</p><div class="dashed-connector line-left"></div></div>
+            <div class="process-step step-6"><div class="step-circle">6</div><h3 class="step-title">Repeat</h3><p class="step-desc">Once we've refined your business strategy and achieved your desired results, we can further restart the procedure to get even refined outcomes down the road.</p><div class="dashed-connector"></div></div>
+        </div>
+    </section>
+
+    <section id="blog" class="blog-section dark-gradient-bg">
+        <div class="blog-header">
+            <h2 class="section-heading">Insights, Strategies & <span class="highlight">Growth Ideas</span></h2>
+            <p class="blog-subheading">Stay updated with the latest marketing trends, branding strategies, and digital growth techniques from Grozvix experts.</p>
+        </div>
+        <div class="blog-grid">
+            <div class="blog-card">
+                <img src="blog1.png" alt="Marketing Strategy" class="blog-img">
+                <div class="blog-body">
+                    <h3 class="blog-title">Why Every Business Needs a Complete Digital Strategy</h3>
+                    <p class="blog-text">In today’s market, having just social media is not enough. You need a complete system.</p>
+                    <div class="blog-more-content">A complete strategy includes understanding your target audience, positioning your brand, creating content, and optimized paid campaigns. At Grozvix, we focus on structured systems that generate consistent leads.</div>
+                    <button class="read-more-btn" onclick="toggleReadMore(this)">Read More <i class="fas fa-chevron-down"></i></button>
+                </div>
+            </div>
+            <div class="blog-card">
+                <img src="blog2.png" alt="Video Marketing" class="blog-img">
+                <div class="blog-body">
+                    <h3 class="blog-title">The Power of Video Marketing for Brand Growth</h3>
+                    <p class="blog-text">Brands that invest in professional video production see higher engagement and trust.</p>
+                    <div class="blog-more-content">Consumers connect with visuals. Whether it’s product demos or reels, video builds credibility. When combined with targeted ads, video marketing becomes a powerful growth tool.</div>
+                    <button class="read-more-btn" onclick="toggleReadMore(this)">Read More <i class="fas fa-chevron-down"></i></button>
+                </div>
+            </div>
+            <div class="blog-card">
+                <img src="blog3.png" alt="SEO Success" class="blog-img">
+                <div class="blog-body">
+                    <h3 class="blog-title">How SEO Drives Long-Term Business Success</h3>
+                    <p class="blog-text">Search Engine Optimization is a long-term investment for organic traffic and credibility.</p>
+                    <div class="blog-more-content">SEO involves keyword research and technical optimization. Unlike paid ads, SEO delivers sustainable traffic over time. It builds authority and strengthens your brand’s foundation.</div>
+                    <button class="read-more-btn" onclick="toggleReadMore(this)">Read More <i class="fas fa-chevron-down"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="hero-buttons" style="margin-top: 20px;">
+            <a href="#services" class="btn btn-outline">Explore Services</a>
+            <button class="btn btn-primary" onclick="openModal()">Start Your Project</button>
+        </div>
+    </section>
+
+    <footer id="footer" class="footer-section">
+        <div class="footer-container">
+            <div class="footer-col">
+                <img src="logo.png" alt="Grozvix Logo" class="footer-logo">
+                <p class="footer-text">Complete A to Z Marketing.</p>
+                <p class="footer-text">One Team. One Vision. Total Growth.</p>
+            </div>
+            <div class="footer-col">
+                <h3 class="footer-heading">Visit Us</h3>
+                <p class="footer-text"><i class="fas fa-map-marker-alt" style="color: #ffea00; margin-right: 8px;"></i> Malappuram, Kottakkal</p>
+                <p class="footer-text" style="padding-left: 20px;">Areekkal City-Kerala 676501</p>
+            </div>
+            <div class="footer-col">
+                <div class="social-links">
+                    <a href="https://instagram.com" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://wa.me/917907287563" target="_blank" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://youtube.com" target="_blank" class="social-link"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 Grozvix. All Rights Reserved.</div>
+    </footer>
+
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 class="modal-title">Start Your <span class="highlight">Project</span></h2>
+            <form>
+                <input type="text" class="form-input" placeholder="Full Name *" required>
+                <input type="text" class="form-input" placeholder="Company / Brand Name *" required>
+                <input type="email" class="form-input" placeholder="Email Address *" required>
+                <input type="tel" class="form-input" placeholder="Phone Number *" required>
+                <input type="tel" class="form-input" placeholder="WhatsApp Number (optional)">
+                <input type="text" class="form-input" placeholder="Business Location (City / Country)">
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Submit Request</button>
+            </form>
+        </div>
+    </div>
+
+    <a href="https://wa.me/917907287563" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
+
+    <script>
+        // Mobile Menu Toggle
+        function toggleMenu() { document.getElementById("navLinks").classList.toggle("active"); }
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => { document.getElementById("navLinks").classList.remove("active"); });
+        });
+
+        // Typewriter Effect
+        const words = ["Who you are", "What you do", "Why choose Grozvix"];
+        let wordIndex = 0, charIndex = 0, isDeleting = false;
+        const typeElement = document.getElementById("typewriter-text");
+        function typeEffect() {
+            const currentWord = words[wordIndex];
+            if (isDeleting) { typeElement.textContent = currentWord.substring(0, charIndex - 1); charIndex--; }
+            else { typeElement.textContent = currentWord.substring(0, charIndex + 1); charIndex++; }
+            let typeSpeed = isDeleting ? 40 : 100;
+            if (!isDeleting && charIndex === currentWord.length) { typeSpeed = 2000; isDeleting = true; }
+            else if (isDeleting && charIndex === 0) { isDeleting = false; wordIndex = (wordIndex + 1) % words.length; typeSpeed = 500; }
+            setTimeout(typeEffect, typeSpeed);
+        }
+        document.addEventListener("DOMContentLoaded", () => { setTimeout(typeEffect, 1000); });
+
+        // Blog Expand
+        function toggleReadMore(btn) {
+            const moreContent = btn.previousElementSibling;
+            if (moreContent.style.display === "none" || moreContent.style.display === "") {
+                moreContent.style.display = "block"; btn.innerHTML = 'Show Less <i class="fas fa-chevron-up"></i>';
+            } else {
+                moreContent.style.display = "none"; btn.innerHTML = 'Read More <i class="fas fa-chevron-down"></i>';
+            }
+        }
+
+        // Modal
+        const modal = document.getElementById("projectModal");
+        function openModal() { modal.style.display = "flex"; }
+        function closeModal() { modal.style.display = "none"; }
+        window.onclick = function(e) { if (e.target == modal) { modal.style.display = "none"; } }
+    </script>
+</body>
+</html>
