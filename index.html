@@ -119,64 +119,80 @@
            4. SERVICES SECTION 
            ========================================================== */
         .services-section { padding: 100px 20px; min-height: 100vh; }
-        .flip-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        .flip-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
         
-        .flip-card { background-color: transparent; width: 100%; height: 400px; perspective: 1000px; }
+        .flip-card { width: 100%; height: 400px; perspective: 1000px; cursor: pointer; } 
         .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-style: preserve-3d; }
-        .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
         
-        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; display: flex; flex-direction: column; transition: box-shadow 0.3s; }
+        /* Hover (Desktop) and Tapped (Mobile) trigger the flip */
+        .flip-card:hover .flip-card-inner,
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
         
-        /* ---------------------------------------------------
-           INDIVIDUAL PLANE COLORS & DYNAMIC GLOW (HOVER)
-           --------------------------------------------------- */
-        
-        /* Box 1: Red (#ff4757) */
-        .card-1 .flip-card-front, .card-1 .flip-card-back { background-color: #ff4757; color: #ffffff; border: 4px solid #ffffff; }
-        .card-1 .flip-card-back h3 { border-bottom: 2px solid #ffffff; }
-        .card-1 .flip-card-back ul li::before { color: #ffffff; }
-        .card-1:hover .flip-card-front, .card-1:hover .flip-card-back { box-shadow: 0 0 25px rgba(255, 71, 87, 0.8), 0 0 45px rgba(255, 71, 87, 0.4); }
+        /* Shared Front and Back Structure */
+        .flip-card-front, .flip-card-back { 
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden; 
+            border-radius: 15px; box-shadow: 0 8px 15px rgba(0,0,0,0.5);
+            transition: box-shadow 0.3s ease-in-out; display: flex; flex-direction: column; 
+        }
 
-        /* Box 2: Coral (#ff7f50) */
-        .card-2 .flip-card-front, .card-2 .flip-card-back { background-color: #ff7f50; color: #ffffff; border: 4px solid #ffffff; }
-        .card-2 .flip-card-back h3 { border-bottom: 2px solid #ffffff; }
-        .card-2 .flip-card-back ul li::before { color: #ffffff; }
-        .card-2:hover .flip-card-front, .card-2:hover .flip-card-back { box-shadow: 0 0 25px rgba(255, 127, 80, 0.8), 0 0 45px rgba(255, 127, 80, 0.4); }
-
-        /* Box 3: Mint Green (#2ed573) */
-        .card-3 .flip-card-front, .card-3 .flip-card-back { background-color: #2ed573; color: #000000; border: 4px solid #000000; }
-        .card-3 .flip-card-back h3 { border-bottom: 2px solid #000000; }
-        .card-3 .flip-card-back ul li::before { color: #000000; }
-        .card-3:hover .flip-card-front, .card-3:hover .flip-card-back { box-shadow: 0 0 25px rgba(46, 213, 115, 0.8), 0 0 45px rgba(46, 213, 115, 0.4); }
-
-        /* Box 4: Blue (#1e90ff) */
-        .card-4 .flip-card-front, .card-4 .flip-card-back { background-color: #1e90ff; color: #ffffff; border: 4px solid #ffffff; }
-        .card-4 .flip-card-back h3 { border-bottom: 2px solid #ffffff; }
-        .card-4 .flip-card-back ul li::before { color: #ffffff; }
-        .card-4:hover .flip-card-front, .card-4:hover .flip-card-back { box-shadow: 0 0 25px rgba(30, 144, 255, 0.8), 0 0 45px rgba(30, 144, 255, 0.4); }
-
-        /* Box 5: Purple (#9b59b6) */
-        .card-5 .flip-card-front, .card-5 .flip-card-back { background-color: #9b59b6; color: #ffffff; border: 4px solid #ffffff; }
-        .card-5 .flip-card-back h3 { border-bottom: 2px solid #ffffff; }
-        .card-5 .flip-card-back ul li::before { color: #ffffff; }
-        .card-5:hover .flip-card-front, .card-5:hover .flip-card-back { box-shadow: 0 0 25px rgba(155, 89, 182, 0.8), 0 0 45px rgba(155, 89, 182, 0.4); }
-
-        /* Box 6: Yellow (#ffea00) */
-        .card-6 .flip-card-front, .card-6 .flip-card-back { background-color: #ffea00; color: #000000; border: 4px solid #000000; }
-        .card-6 .flip-card-back h3 { border-bottom: 2px solid #000000; }
-        .card-6 .flip-card-back ul li::before { color: #000000; }
-        .card-6:hover .flip-card-front, .card-6:hover .flip-card-back { box-shadow: 0 0 25px rgba(255, 234, 0, 0.8), 0 0 45px rgba(255, 234, 0, 0.4); }
-
+        /* Standard Front formatting */
         .flip-card-front { justify-content: center; align-items: center; padding: 20px; }
         .flip-card-front i { font-size: 3rem; margin-bottom: 15px; }
         .flip-card-front h3 { font-family: 'Orbitron', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; line-height: 1.2; text-align: center; }
         .flip-card-front p { font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 600; text-align: center; }
-        
+
+        /* Standard Back formatting */
         .flip-card-back { transform: rotateY(180deg); justify-content: flex-start; text-align: left; padding: 20px 15px; overflow-y: auto; }
         .flip-card-back h3 { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; text-align: center; padding-bottom: 5px; }
         .flip-card-back ul { list-style: none; padding: 0; margin: 0; }
         .flip-card-back ul li { font-family: 'Poppins', sans-serif; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; position: relative; padding-left: 20px; line-height: 1.4; }
         .flip-card-back ul li::before { content: '\f00c'; font-family: 'Font Awesome 5 Free'; font-weight: 900; position: absolute; left: 0; }
+
+        /* ---------------------------------------------------
+           THE 6 PLANE COLORS RESTORED EXACTLY AS REQUESTED
+           --------------------------------------------------- */
+        
+        /* Box 1: Red (#ff4757) */
+        .card-1 .flip-card-front, .card-1 .flip-card-back { background: #ff4757; color: #ffffff; border: 4px solid #ffffff; }
+        .card-1 .flip-card-front i { color: #ffffff; }
+        .card-1 .flip-card-back h3 { border-bottom: 2px solid #ffffff; }
+        .card-1 .flip-card-back ul li::before { color: #ffffff; }
+        .card-1:hover .flip-card-front, .card-1:hover .flip-card-back, .card-1.flipped .flip-card-front, .card-1.flipped .flip-card-back { box-shadow: 0 0 25px rgba(255, 71, 87, 0.8), 0 0 45px rgba(255, 71, 87, 0.4); }
+
+        /* Box 2: Coral (#ff7f50) */
+        .card-2 .flip-card-front, .card-2 .flip-card-back { background: #ff7f50; color: #ffffff; border: 4px solid #ffffff; }
+        .card-2 .flip-card-front i { color: #ffffff; }
+        .card-2 .flip-card-back h3 { border-bottom: 2px solid #ffffff; }
+        .card-2 .flip-card-back ul li::before { color: #ffffff; }
+        .card-2:hover .flip-card-front, .card-2:hover .flip-card-back, .card-2.flipped .flip-card-front, .card-2.flipped .flip-card-back { box-shadow: 0 0 25px rgba(255, 127, 80, 0.8), 0 0 45px rgba(255, 127, 80, 0.4); }
+
+        /* Box 3: Mint Green (#2ed573) - Black Text */
+        .card-3 .flip-card-front, .card-3 .flip-card-back { background: #2ed573; color: #000000; border: 4px solid #000000; }
+        .card-3 .flip-card-front i { color: #000000; }
+        .card-3 .flip-card-back h3 { border-bottom: 2px solid #000000; }
+        .card-3 .flip-card-back ul li::before { color: #000000; }
+        .card-3:hover .flip-card-front, .card-3:hover .flip-card-back, .card-3.flipped .flip-card-front, .card-3.flipped .flip-card-back { box-shadow: 0 0 25px rgba(46, 213, 115, 0.8), 0 0 45px rgba(46, 213, 115, 0.4); }
+
+        /* Box 4: Blue (#1e90ff) */
+        .card-4 .flip-card-front, .card-4 .flip-card-back { background: #1e90ff; color: #ffffff; border: 4px solid #ffffff; }
+        .card-4 .flip-card-front i { color: #ffffff; }
+        .card-4 .flip-card-back h3 { border-bottom: 2px solid #ffffff; }
+        .card-4 .flip-card-back ul li::before { color: #ffffff; }
+        .card-4:hover .flip-card-front, .card-4:hover .flip-card-back, .card-4.flipped .flip-card-front, .card-4.flipped .flip-card-back { box-shadow: 0 0 25px rgba(30, 144, 255, 0.8), 0 0 45px rgba(30, 144, 255, 0.4); }
+
+        /* Box 5: Purple (#9b59b6) */
+        .card-5 .flip-card-front, .card-5 .flip-card-back { background: #9b59b6; color: #ffffff; border: 4px solid #ffffff; }
+        .card-5 .flip-card-front i { color: #ffffff; }
+        .card-5 .flip-card-back h3 { border-bottom: 2px solid #ffffff; }
+        .card-5 .flip-card-back ul li::before { color: #ffffff; }
+        .card-5:hover .flip-card-front, .card-5:hover .flip-card-back, .card-5.flipped .flip-card-front, .card-5.flipped .flip-card-back { box-shadow: 0 0 25px rgba(155, 89, 182, 0.8), 0 0 45px rgba(155, 89, 182, 0.4); }
+
+        /* Box 6: Yellow (#ffea00) - Black Text */
+        .card-6 .flip-card-front, .card-6 .flip-card-back { background: #ffea00; color: #000000; border: 4px solid #000000; }
+        .card-6 .flip-card-front i { color: #000000; }
+        .card-6 .flip-card-back h3 { border-bottom: 2px solid #000000; }
+        .card-6 .flip-card-back ul li::before { color: #000000; }
+        .card-6:hover .flip-card-front, .card-6:hover .flip-card-back, .card-6.flipped .flip-card-front, .card-6.flipped .flip-card-back { box-shadow: 0 0 25px rgba(255, 234, 0, 0.8), 0 0 45px rgba(255, 234, 0, 0.4); }
 
         /* ==========================================================
            5. PROCESS SECTION 
@@ -212,7 +228,8 @@
         .blog-title { color: #ffffff; font-family: 'Montserrat', sans-serif; font-size: 1.1rem; font-weight: 800; margin-bottom: 15px; }
         .blog-text, .blog-more-content { color: #a0a0a0; font-size: 0.9rem; line-height: 1.6; margin-bottom: 15px; }
         .blog-more-content { display: none; }
-        .read-more-btn { background: none; border: none; color: #ffea00; font-weight: 700; font-size: 0.9rem; cursor: pointer; padding: 0; }
+        .read-more-btn { background: none; border: none; color: #ffea00; font-weight: 700; font-size: 0.9rem; cursor: pointer; padding: 0; transition: color 0.3s; }
+        .read-more-btn:hover { color: #ffffff; }
 
         /* ==========================================================
            7. FOOTER SECTION
@@ -251,7 +268,7 @@
         }
 
         @media (max-width: 768px) {
-            section { padding: 70px 15px; } /* Less padding on mobile */
+            section { padding: 70px 15px; } 
             .main-heading { font-size: 2.8rem; }
             .sub-heading { font-size: 1.1rem; margin-bottom: 30px; }
             .about-heading-1, .about-heading-2, .section-heading { font-size: 2rem; }
@@ -311,8 +328,8 @@
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1 class="main-heading">
-                <span class="white-text">COMPLETE</span><br>
-                <span class="yellow-text">A TO Z MARKETING</span>
+                <span class="white-text">Complete</span><br>
+                <span class="yellow-text">A to Z Marketing</span>
             </h1>
             <h2 class="sub-heading">One Team. One Vision. Total Growth.</h2>
             <div class="hero-buttons">
@@ -352,8 +369,9 @@
         <div class="office-container">
             <div class="office-grid">
                 <div class="office-video-container">
-                    <video src="office.mp4" autoplay loop muted playsinline class="office-video"></video>
+                    <video src="office.MP4" autoplay loop muted playsinline class="office-video"></video>
                 </div>
+                
                 <div class="office-content">
                     <p>At Grozvix, every project begins with powerful ideas and ends with measurable results. Our workspace is designed to inspire creativity, collaboration, and innovation.</p>
                     <p>From content creation and video production to performance marketing and development, this is where brands are transformed into market leaders.</p>
@@ -368,151 +386,48 @@
         <h2 class="section-heading">What We Do</h2>
         <div class="flip-grid">
             
-            <div class="flip-card card-1">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front">
-                        <i class="fas fa-video"></i>
-                        <h3>Creative Production</h3>
-                        <p>We create powerful visual content that captures attention and builds brand identity.</p>
-                    </div>
-                    <div class="flip-card-back">
-                        <h3>Creative Production</h3>
-                        <ul>
-                            <li>Professional Video Shooting</li>
-                            <li>High-Quality Video Editing</li>
-                            <li>Product & Corporate Photo Shoots</li>
-                            <li>Photo Editing & Retouching</li>
-                            <li>Reels & Promotional Videos</li>
-                            <li>Video Anchoring & Presentation</li>
-                            <li>Ad Film Production</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flip-card card-2">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front">
-                        <i class="fas fa-share-alt"></i>
-                        <h3>Social Media</h3>
-                        <p>We manage and grow your social presence with engaging content and smart strategies.</p>
-                    </div>
-                    <div class="flip-card-back">
-                        <h3>Social Media</h3>
-                        <ul>
-                            <li>Instagram Page Handling</li>
-                            <li>Facebook Page Management</li>
-                            <li>YouTube Channel Management</li>
-                            <li>Content Calendar Planning</li>
-                            <li>Reels & Shorts Creation</li>
-                            <li>Audience Growth Strategy</li>
-                            <li>Community Engagement</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flip-card card-3">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front">
-                        <i class="fas fa-chart-line"></i>
-                        <h3>Performance Ads</h3>
-                        <p>We run result-driven ad campaigns that generate leads, traffic, and sales.</p>
-                    </div>
-                    <div class="flip-card-back">
-                        <h3>Performance Ads</h3>
-                        <ul>
-                            <li>Meta Ads (Facebook & Instagram)</li>
-                            <li>Google Ads Campaigns</li>
-                            <li>Lead Generation Ads</li>
-                            <li>Conversion Campaigns</li>
-                            <li>Retargeting Ads</li>
-                            <li>Funnel Strategy & Optimization</li>
-                            <li>Analytics & Performance Tracking</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flip-card card-4">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front">
-                        <i class="fas fa-search"></i>
-                        <h3>SEO</h3>
-                        <p>We improve your online visibility and help your website rank higher on search engines.</p>
-                    </div>
-                    <div class="flip-card-back">
-                        <h3>SEO Optimization</h3>
-                        <ul>
-                            <li>Keyword Research & Strategy</li>
-                            <li>On-Page SEO Optimization</li>
-                            <li>Technical SEO Improvements</li>
-                            <li>Local SEO Optimization</li>
-                            <li>Content SEO Strategy</li>
-                            <li>Website Speed Optimization</li>
-                            <li>Google Search Console Setup</li>
-                            <li>Competitor Analysis</li>
-                            <li>Monthly SEO Reporting</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flip-card card-5">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front">
-                        <i class="fas fa-paint-brush"></i>
-                        <h3>Branding & Design</h3>
-                        <p>We build strong and memorable brand identities.</p>
-                    </div>
-                    <div class="flip-card-back">
-                        <h3>Branding & Design</h3>
-                        <ul>
-                            <li>Logo Design</li>
-                            <li>Brand Identity Development</li>
-                            <li>Poster & Creative Design</li>
-                            <li>Social Media Creatives</li>
-                            <li>Corporate Branding Materials</li>
-                            <li>Marketing Collateral Design</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flip-card card-6">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front">
-                        <i class="fas fa-laptop-code"></i>
-                        <h3>Development</h3>
-                        <p>We build high-performance digital platforms for your business.</p>
-                    </div>
-                    <div class="flip-card-back">
-                        <h3>Development Solutions</h3>
-                        <ul>
-                            <li>Professional Website Development</li>
-                            <li>E-commerce Website Development</li>
-                            <li>Landing Page Design</li>
-                            <li>Business Website Redesign</li>
-                            <li>Mobile App Development</li>
-                            <li>UI/UX Design</li>
-                            <li>Website Maintenance & Support</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
+            <div class="flip-card card-1" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner">
+                <div class="flip-card-front"><i class="fas fa-video"></i><h3>Creative Production</h3><p>We create powerful visual content.</p></div>
+                <div class="flip-card-back"><h3>Production</h3><ul><li>Pro Video Shooting</li><li>Editing & Retouching</li><li>Photo Shoots</li><li>Reels & Promos</li><li>Ad Film Production</li></ul></div>
+            </div></div>
+            
+            <div class="flip-card card-2" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner">
+                <div class="flip-card-front"><i class="fas fa-share-alt"></i><h3>Social Media</h3><p>We manage and grow your social presence.</p></div>
+                <div class="flip-card-back"><h3>Social Media</h3><ul><li>Instagram/FB Handling</li><li>YouTube Management</li><li>Content Planning</li><li>Reels & Shorts</li><li>Community Engagement</li></ul></div>
+            </div></div>
+            
+            <div class="flip-card card-3" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner">
+                <div class="flip-card-front"><i class="fas fa-chart-line"></i><h3>Performance Ads</h3><p>Result-driven ad campaigns.</p></div>
+                <div class="flip-card-back"><h3>Ads</h3><ul><li>Meta Ads (FB/Insta)</li><li>Google Ads</li><li>Lead Gen & Conversions</li><li>Retargeting</li><li>Analytics Tracking</li></ul></div>
+            </div></div>
+            
+            <div class="flip-card card-4" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner">
+                <div class="flip-card-front"><i class="fas fa-search"></i><h3>SEO</h3><p>Rank higher on search engines.</p></div>
+                <div class="flip-card-back"><h3>SEO</h3><ul><li>Keyword Strategy</li><li>On-Page & Technical SEO</li><li>Local SEO</li><li>Speed Optimization</li><li>Competitor Analysis</li></ul></div>
+            </div></div>
+            
+            <div class="flip-card card-5" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner">
+                <div class="flip-card-front"><i class="fas fa-paint-brush"></i><h3>Branding</h3><p>Build strong brand identities.</p></div>
+                <div class="flip-card-back"><h3>Branding</h3><ul><li>Logo Design</li><li>Identity Development</li><li>Poster & Creatives</li><li>Corporate Materials</li><li>Marketing Collateral</li></ul></div>
+            </div></div>
+            
+            <div class="flip-card card-6" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner">
+                <div class="flip-card-front"><i class="fas fa-laptop-code"></i><h3>Development</h3><p>High-performance digital platforms.</p></div>
+                <div class="flip-card-back"><h3>Development</h3><ul><li>Website Development</li><li>E-commerce Solutions</li><li>Landing Pages</li><li>App Development</li><li>UI/UX Design</li></ul></div>
+            </div></div>
+            
         </div>
     </section>
 
     <section id="process" class="process-section dark-gradient-bg">
         <h2 class="section-heading">We Always Follow The <span class="highlight">Standard Work Process</span></h2>
         <div class="process-grid">
-            <div class="process-step step-1"><div class="step-circle">1</div><h3 class="step-title">Planning</h3><p class="step-desc">The first step in any successful digital marketing campaign is planning. This includes research into your target audience, your competitors, and your overall goals.</p><div class="dashed-connector line-right"></div></div>
-            <div class="process-step step-2"><div class="step-circle">2</div><h3 class="step-title">Strategy</h3><p class="step-desc">This is where we'll determine approaches to reach your target audience and accomplish your objectives. It's crucial to choose the right digital marketing channels for your company.</p><div class="dashed-connector line-right"></div></div>
-            <div class="process-step step-3"><div class="step-circle">3</div><h3 class="step-title">Execution</h3><p class="step-desc">This is where the rubber meets the road! We will start implementing your digital marketing plan for running creative campaigns, and many more.</p><div class="dashed-connector line-u-turn"></div></div>
-            <div class="process-step step-4"><div class="step-circle">4</div><h3 class="step-title">Tracking & Analysis</h3><p class="step-desc">Analysing and keeping tabs on outcomes is crucial. We will assess what's working and what's not and make modifications to enhance your performance.</p><div class="dashed-connector line-left"></div></div>
-            <div class="process-step step-5"><div class="step-circle">5</div><h3 class="step-title">Refinement</h3><p class="step-desc">After analysing your outcomes, we adjust your digital marketing plan. This may include updating your website, social media, digital advertising, or other strategies.</p><div class="dashed-connector line-left"></div></div>
-            <div class="process-step step-6"><div class="step-circle">6</div><h3 class="step-title">Repeat</h3><p class="step-desc">Once we've refined your business strategy and achieved your desired results, we can further restart the procedure to get even refined outcomes down the road.</p><div class="dashed-connector"></div></div>
+            <div class="process-step step-1"><div class="step-circle">1</div><h3 class="step-title">Planning</h3><p class="step-desc">Research into your target audience, competitors, and goals.</p><div class="dashed-connector line-right"></div></div>
+            <div class="process-step step-2"><div class="step-circle">2</div><h3 class="step-title">Strategy</h3><p class="step-desc">Determine approaches to reach audience and accomplish objectives.</p><div class="dashed-connector line-right"></div></div>
+            <div class="process-step step-3"><div class="step-circle">3</div><h3 class="step-title">Execution</h3><p class="step-desc">Start implementing your digital marketing plan.</p><div class="dashed-connector line-u-turn"></div></div>
+            <div class="process-step step-4"><div class="step-circle">4</div><h3 class="step-title">Tracking</h3><p class="step-desc">Analysing outcomes and modifying for performance.</p><div class="dashed-connector line-left"></div></div>
+            <div class="process-step step-5"><div class="step-circle">5</div><h3 class="step-title">Refinement</h3><p class="step-desc">Adjust plan, update websites, social media or ads.</p><div class="dashed-connector line-left"></div></div>
+            <div class="process-step step-6"><div class="step-circle">6</div><h3 class="step-title">Repeat</h3><p class="step-desc">Restart the procedure to get refined outcomes.</p><div class="dashed-connector"></div></div>
         </div>
     </section>
 
